@@ -8,7 +8,7 @@ export class JwtHelperClass {
 
   public generateToken(data: any) {
     // PRIVATE
-    const keyPath = path.join(__dirname, "/../private.key");
+    const keyPath = path.join(__dirname, "/../../private.key");
     const privateKey = readFileSync(keyPath, "utf-8");
 
     // SIGNING OPTIONS
@@ -30,7 +30,7 @@ export class JwtHelperClass {
 
   public verifyToken(token: string) {
     //PUBLIC key
-    const keyPath = path.join(__dirname, "/../public.key");
+    const keyPath = path.join(__dirname, "/../../public.key");
     const publicKey = readFileSync(keyPath, "utf-8");
 
     // VERIFY OPTIONS

@@ -1,6 +1,6 @@
 {   "app": {
         "env": "PRODUCTION",
-        "port": 2553,
+        "port": 2552,
         "app_url": ""
     },
     "db": {

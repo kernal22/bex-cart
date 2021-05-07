@@ -1,6 +1,6 @@
 #@base_url = http://localhost:2552/api
 
-@base_url = http://13.126.205.131:2552/api
+@base_url = http://13.126.205.131:2553/api
 
 ###
 
