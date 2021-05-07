@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
     "build": "rimraf ./build && tsc",
+    "build:doc": "apidoc -i src/ -o doc/",
+    "start:doc": "npm run build:doc && node api-doc-server",
     "start:dev": "nodemon",
     "start:prod": "npm run build && cross-env NODE_ENV=production node ./build/src/index.js"
   },
@@ -22,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.11",
+    "apidoc": "^0.27.1",
     "argon2": "^0.27.2",
     "config": "^3.3.6",
     "cors": "^2.8.5",
