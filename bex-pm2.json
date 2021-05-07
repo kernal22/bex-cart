@@ -4,6 +4,11 @@
             "name": "bex-cart-api",
             "script": "npm",
             "args": "run start:prod"
+        },
+        {
+            "name": "bex-cart-api-doc",
+            "script": "npm",
+            "args": "run start:doc"
         }
     ]
 }
