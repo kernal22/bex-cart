@@ -1,0 +1,17 @@
+{   "app": {
+        "env": "PRODUCTION",
+        "port": 2553,
+        "app_url": ""
+    },
+    "db": {
+        "user": "root",
+        "password": "4es4kTH0f3Kwli4o",
+        "connection_string": "mongodb+srv://root:<password>@bex-cart.wpipt.mongodb.net/test",
+        "database": "test"
+    },
+    "token": {
+        "issuer": "bex-cart",
+        "expiresIn": "90days",
+        "jwtid": "f9668a49-64a4-401c-b687-4c3d5d7c9b62"
+    }
+}

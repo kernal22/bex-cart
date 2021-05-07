@@ -1,0 +1,27 @@
+#@base_url = http://localhost:2552/api
+
+@base_url = http://13.126.205.131:2552/api
+
+###
+
+POST {{base_url}}/auth/sign-up HTTP/1.1
+content-type: application/json
+
+{
+    "firstName": "sanjay",
+    "lastName": "kumar",
+    "userName": "sanju2212",
+    "email": "sanjayjnu22@gmail.com",
+    "phone": 9090911111,
+    "password": "11111"
+}
+
+###
+
+POST {{base_url}}/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "admin",
+    "password": "admin"
+}
