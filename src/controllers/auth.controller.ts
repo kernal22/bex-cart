@@ -26,7 +26,7 @@ export class AuthController {
       if (data.status) {
         return res.status(StatusCodes.OK).json(data);
       } else {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(data);
+        return res.status(StatusCodes.UNAUTHORIZED).json(data);
       }
     } catch (error) {
       return res

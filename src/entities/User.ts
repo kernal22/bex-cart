@@ -6,4 +6,5 @@ export interface IUser {
   role: string;
   userName: string;
   password: string;
+  _id?: string;
 }

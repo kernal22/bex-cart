@@ -22,14 +22,31 @@ const UserSchema: Schema = new Schema(
     },
     phone: { type: Number, required: true, minLength: 10, maxLength: 10 },
     hashPassword: { type: String, required: true },
+    // role: {
+    //   type: String,
+    //   enum: ["customer", "admin", "vendor", "manager", "reseller"],
+    //   default: "customer",
+    // },
     role: {
-      type: String,
-      enum: ["customer", "admin", "vendor", "manager", "reseller"],
-      default: "customer",
+      type: Schema.Types.ObjectId,
+      ref: "Roles",
     },
+    status: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
 
+const RolesSchema = new Schema({
+  title: {
+    type: String,
+    unique: true,
+    index: true,
+    lowercase: true,
+    trim: true,
+  },
+});
+
+const Roles = model("Roles", RolesSchema);
 const User = model("User", UserSchema);
-export { User };
+
+export { User, Roles };
