@@ -1,4 +1,6 @@
 import { Roles, User } from "../models";
+import slugify from "slugify";
+import { IRoles } from "../entities";
 
 export class UserService {
   constructor() {}
@@ -15,11 +17,20 @@ export class UserService {
           condition["_id"] = _id;
         }
 
-        const list = await User.find(condition).exec();
+        const list = await User.find(condition).populate("role");
         if (list.length) {
           let userArray: Array<any> = [];
           for (let item of list) {
-            const { _id, firstName, lastName, email, phone, userName } = item;
+            const {
+              _id,
+              firstName,
+              lastName,
+              email,
+              phone,
+              userName,
+              role,
+              status,
+            } = item;
             userArray.push({
               _id,
               firstName,
@@ -27,11 +38,13 @@ export class UserService {
               email,
               phone,
               userName,
+              role,
+              status,
             });
           }
           return resolve({ status: true, data: userArray });
         }
-        return resolve({ status: false, data: list });
+        return resolve({ status: false, data: [] });
       } catch (error) {
         return reject(error);
       }
@@ -103,6 +116,34 @@ export class UserService {
           return resolve({ status: true, data: list });
         }
         return resolve({ status: false, data: list });
+      } catch (error) {
+        return reject(error);
+      }
+    });
+  }
+
+  public async createRole(requestData: IRoles) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const slug = slugify(requestData.title);
+        const isSlugData = await Roles.findOne({
+          $or: [{ slug: slug }, { title: requestData.title }],
+        }).exec();
+        if (isSlugData) {
+          return resolve({ status: false, message: "Role Already Exist" });
+        } else {
+          const obj = { title: requestData.title, slug: slug };
+          const _newRole = new Roles(obj);
+          const data = await _newRole.save();
+          if (data) {
+            return resolve({
+              status: true,
+              message: "Role added successfully",
+            });
+          } else {
+            return resolve({ status: false, message: "Something went wrong" });
+          }
+        }
       } catch (error) {
         return reject(error);
       }

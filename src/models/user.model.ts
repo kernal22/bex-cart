@@ -36,15 +36,19 @@ const UserSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const RolesSchema = new Schema({
-  title: {
-    type: String,
-    unique: true,
-    index: true,
-    lowercase: true,
-    trim: true,
+const RolesSchema = new Schema(
+  {
+    title: {
+      type: String,
+      unique: true,
+      index: true,
+      lowercase: true,
+      trim: true,
+    },
+    slug: { type: String, unique: true, lowercase: true, trim: true },
   },
-});
+  { timestamps: true }
+);
 
 const Roles = model("Roles", RolesSchema);
 const User = model("User", UserSchema);

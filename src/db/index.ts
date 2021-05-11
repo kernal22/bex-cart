@@ -15,8 +15,12 @@ export class DatabaseConnection {
         useCreateIndex: true,
         useFindAndModify: false,
       }
-    ).then(() => {
-      console.log("database connected");
-    });
+    )
+      .then(() => {
+        console.log("database connected");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }

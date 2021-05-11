@@ -91,7 +91,7 @@ _router.put("/", UserController.updateUser);
  * @apiSuccess {String} message for information.
  * @apiSuccess {object} data for payload.
  *
- *  * @apiExample Sample-Request:
+ *   @apiExample Sample-Request:
  *   {
  *      "_id": "6093d5329d21796ff463e422"
  *    }
@@ -149,5 +149,45 @@ _router.delete("/", UserController.deleteUser);
  *     }
  */
 _router.get("/role", UserController.getUserRoles);
+
+/******************************************************************************
+ *                     Admin Create User Role - "POST /api/user/role"
+ ******************************************************************************/
+
+/**
+ * @api {POST} /api/user/role Create User Role
+ * @apiName Create-User-Role
+ * @apiGroup Admin
+ *
+ * @apiSuccess {boolean} error for checking the error.
+ * @apiSuccess {String} message for information.
+ * @apiSuccess {object} data for payload.
+ *
+ *  *   @apiExample Sample-Request:
+ *   {
+ *      "title": "customer"
+ *    }
+ *
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "status": true,
+ *       "error": false,
+ *       "message": "Role created Successfully",
+ *       "data": object
+ *     }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 204 unauthorized request
+ *     {
+ *        "status": false
+ *       "error": true,
+ *       "message": "Already Exist"
+ *       "data":null
+ *     }
+ */
+_router.post("/role", UserController.createRole);
 
 export default _router;
