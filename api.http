@@ -39,8 +39,8 @@ content-type: application/json
 
 {
     "firstName": "mahendra",
-    "lastName": "bhau",
-    "phone": 9090911110,
+    "lastName": "kol",
+    "phone": 7878787888,
     "status": true,
     "_id": "6099636fcfc7fc7504549e98"
 }
