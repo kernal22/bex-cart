@@ -3,13 +3,9 @@ import { Schema, model } from "mongoose";
 const CategorySchema: Schema = new Schema(
   {
     name: { type: String, required: true, trim: true },
-    slug: { type: String, required: true, unique: true },
+    slug: { type: String, required: true, unique: true, lowercase: true },
     parentId: { type: String },
-    categoryImage: {
-      type: Schema.Types.ObjectId,
-      ref: "Attachment",
-      required: true,
-    },
+    filePath: { type: String },
     status: { type: Boolean, default: true },
   },
   { timestamps: true }

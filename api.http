@@ -1,6 +1,6 @@
-@base_url = http://localhost:2552/api
+#@base_url = http://localhost:2552/api
 
-#@base_url = http://65.0.21.177:2552/api
+@base_url = http://65.0.21.177:2552/api
 
 ###
 
@@ -38,12 +38,11 @@ PUT {{base_url}}/user/ HTTP/1.1
 content-type: application/json
 
 {
-    "firstName": "gautam",
-    "lastName": "kumar",
+    "firstName": "mahendra",
+    "lastName": "bhau",
     "phone": 9090911110,
-    "password": "11111",
     "status": true,
-    "_id": "6093d5329d21796ff463e422"
+    "_id": "6099636fcfc7fc7504549e98"
 }
 
 ###

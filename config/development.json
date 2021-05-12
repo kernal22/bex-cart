@@ -13,5 +13,11 @@
         "issuer": "bex-cart",
         "expiresIn": "90days",
         "jwtid": "jwtid"
+    },
+    "aws_s3bucket": {
+        "AWS_ACCESS_KEY": "AKIASVUQZW25ZMG3INMU",
+        "AWS_SECRET_ACCESS_KEY": "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",
+        "REGION": "ap-south-1",
+        "Bucket": "bex-cart-files-uploaded"
     }
 }
