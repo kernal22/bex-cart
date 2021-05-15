@@ -1,26 +1,14 @@
-const { createModel } = require("mongoose-gridfs");
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-let Attachment: any;
+const AttachmentSchema: Schema = new Schema(
+  {
+    filePath: { type: String },
+    status: { type: Boolean, default: true },
+    isDeleted: { type: Boolean, default: false },
+  },
+  { timestamps: true }
+);
 
-mongoose.Promise = global.Promise;
+const Attachment = model("Attachment", AttachmentSchema);
 
-mongoose.connection.on("open", function () {
-  Attachment = createModel({
-    modelName: "Attachment",
-  });
-});
-
-const write = (fileStream: any, options: any, funCall: any) => {
-  Attachment.write(options, fileStream, funCall);
-};
-
-const read = (id: string, funCall: any) => {
-  Attachment.findById(id, funCall);
-};
-
-const unlink = (id: string, funCall: any) => {
-  Attachment.unlink(id, funCall);
-};
-
-export { write, read, unlink };
+export { Attachment };

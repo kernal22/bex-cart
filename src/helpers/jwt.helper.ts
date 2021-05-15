@@ -45,8 +45,7 @@ export class JwtHelperClass {
       const ValidToken = verify(token, publicKey, verifyOptions);
       return ValidToken;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw { message: "Token is invalid" };
     }
   }
 }

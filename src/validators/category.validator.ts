@@ -33,3 +33,17 @@ export const validateUpdateCategory = [
     next();
   },
 ];
+
+export const validateDelete = [
+  check("_id").notEmpty().withMessage("id required"),
+
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (errors.array().length > 0) {
+      return res
+        .status(StatusCodes.NOT_ACCEPTABLE)
+        .json({ errors: errors.array()[0].msg });
+    }
+    next();
+  },
+];

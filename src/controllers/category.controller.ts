@@ -37,9 +37,34 @@ export class CategoryController {
     }
   }
 
+  public static async getSubCategory(req: Request, res: Response) {
+    try {
+      const data: any = await _categoryService.getSubCategory(
+        req.params,
+        req.query
+      );
+      return res.status(StatusCodes.OK).json(data);
+    } catch (error) {
+      CategoryController.handleError(req, res, error);
+    }
+  }
+
   public static async updateCategory(req: Request, res: Response) {
     try {
       const data: any = await _categoryService.updateCategory(req.body);
+      if (data.status) {
+        return res.status(StatusCodes.OK).json(data);
+      } else {
+        return res.status(StatusCodes.PRECONDITION_FAILED).json(data);
+      }
+    } catch (error) {
+      CategoryController.handleError(req, res, error);
+    }
+  }
+
+  public static async deleteCategory(req: Request, res: Response) {
+    try {
+      const data: any = await _categoryService.deleteCategory(req.body);
       if (data.status) {
         return res.status(StatusCodes.OK).json(data);
       } else {
@@ -54,6 +79,6 @@ export class CategoryController {
     console.error(error);
     return res
       .status(StatusCodes.BAD_REQUEST)
-      .json({ status: false, error: "BAD_REQUEST" });
+      .json({ status: false, error: error, message: error.message });
   }
 }

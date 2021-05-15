@@ -5,9 +5,10 @@
     },
     "db": {
         "user": "root",
-        "password": "4es4kTH0f3Kwli4o",
+        "password": "root",
+        "host": "localhost:27017",
         "connection_string": "mongodb+srv://root:<password>@bex-cart.wpipt.mongodb.net/test",
-        "database": "test"
+        "database": "flipkart"
     },
     "token": {
         "issuer": "bex-cart",

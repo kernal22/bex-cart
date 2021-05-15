@@ -6,6 +6,7 @@
     "db": {
         "user": "root",
         "password": "4es4kTH0f3Kwli4o",
+        "host": "bex-cart.wpipt.mongodb.net",
         "connection_string": "mongodb+srv://root:<password>@bex-cart.wpipt.mongodb.net/test",
         "database": "test"
     },
