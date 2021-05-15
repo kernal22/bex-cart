@@ -176,6 +176,7 @@ function createCategory(categories: any, parentId: any = null): Array<any> {
         name: cat.name,
         slug: cat.slug,
         status: cat.status,
+        isDeleted: cat.isDeleted,
       };
       if (cat.attachment) {
         catObj.attachmentId = cat.attachment._id;

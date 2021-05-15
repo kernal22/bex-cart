@@ -18,6 +18,7 @@ const _router = Router();
  * @api {POST} /api/category admin add category and sub category
  * @apiName Admin-Add-Category-SubCategory-POST
  * @apiGroup Category
+ * @apiHeader {String} Authorization Bearer token
  *
  * @apiSuccess {boolean} error for checking the error.
  * @apiSuccess {String} message for information.
@@ -90,11 +91,11 @@ _router.post(
 _router.get("/:id?", CategoryController.getCategory);
 
 /******************************************************************************
- *                     sub category List - "GET /api/category/<parentId>"
+ *                     sub category List - "GET /api/category/sub-category/<parentId>"
  ******************************************************************************/
 
 /**
- * @api {GET} /api/category<parentId> sub category List list
+ * @api {GET} /api/category/sub-category/<parentId> sub category List list
  * @apiName sub-category-list
  * @apiGroup category
  *
@@ -131,12 +132,13 @@ _router.get("/sub-category/:id", CategoryController.getSubCategory);
  * @api {PUT} /api/category update category or sub category
  * @apiName Update-category-or-sub-category
  * @apiGroup Category
+ * @apiHeader {String} Authorization Bearer token
  *
  * @apiSuccess {boolean} error for checking the error.
  * @apiSuccess {String} message for information.
  * @apiSuccess {object} data for payload.
  *
- *  * @apiExample Sample-Request:
+ * @apiExample Sample-Request:
  *   {
  *      "status": "true",
  *      "name": "kumar"
