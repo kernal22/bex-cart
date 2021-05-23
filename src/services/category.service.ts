@@ -1,6 +1,9 @@
+import { StatusCodes } from "http-status-codes";
 import slugify from "slugify";
+import { ICategoryAttribute } from "../entities";
 import { Category } from "../models";
 import { FileUtils } from "../utils";
+import mongoose from "mongoose";
 export class CategoryService {
   public async createCategory(requestData: any, attachment: any) {
     return new Promise(async (resolve, reject) => {
@@ -150,6 +153,113 @@ export class CategoryService {
           return resolve({
             status: true,
             message: "deleted successfully",
+          });
+        } else {
+          return resolve({ status: false, message: "something went wrong" });
+        }
+      } catch (error) {
+        return reject(error);
+      }
+    });
+  }
+
+  public async addCategoryAttribute(requestData: ICategoryAttribute) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { categoryId, name, values } = requestData;
+        const slug = slugify(name.toLowerCase());
+        values.map((item) => (item["slug"] = slugify(item.name.toLowerCase())));
+        const attributeData = { name, slug, values };
+        const categoryData = await Category.findById(categoryId);
+
+        for (let item of categoryData.attributes) {
+          if (item.slug == slug) {
+            return resolve({
+              status: false,
+              message: "Attribute already exist",
+            });
+          }
+        }
+        const result = await Category.findByIdAndUpdate(
+          categoryId,
+          { $push: { attributes: attributeData } },
+          { new: true }
+        );
+        return resolve({
+          status: true,
+          message: "Added successfully",
+          data: result,
+        });
+      } catch (error) {
+        return reject(error);
+      }
+    });
+  }
+
+  public async getCategoryAttribute(query: any) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { id } = query;
+        const ObjectId = mongoose.Types.ObjectId;
+        const attributeLists: any = await Category.aggregate([
+          {
+            $match: { _id: ObjectId(id) },
+          },
+          {
+            $project: {
+              attributes: {
+                $filter: {
+                  input: "$attributes",
+                  as: "attributes",
+                  cond: { $eq: ["$$attributes.status", true] },
+                },
+              },
+              _id: 0,
+            },
+          },
+          { $unwind: "$attributes" },
+        ]);
+        if (attributeLists.length) {
+          return resolve({
+            status: true,
+            data: attributeLists,
+            message: "Attribute and its value list",
+          });
+        } else {
+          return resolve({
+            status: false,
+            message: "No Data found",
+            data: [],
+          });
+        }
+      } catch (error) {
+        return reject(error);
+      }
+    });
+  }
+
+  public async updateCategoryAttribute(requestData: any) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { _id, valueId, status, name, type } = requestData;
+        let condition: any = {};
+        let updateValues: any = {};
+
+        if (type === "attr") {
+          condition = { "attributes._id": _id };
+          updateValues = { $set: { "attributes.$.status": status } };
+        } else {
+          condition = { "attributes._id": _id, "values._id": valueId };
+          updateValues = { $set: { "values.$.status": status } };
+        }
+
+        const data = await Category.updateOne(condition, updateValues);
+
+        if (data.nModified) {
+          return resolve({
+            status: true,
+            message: "updated successfully",
+            data: data,
           });
         } else {
           return resolve({ status: false, message: "something went wrong" });

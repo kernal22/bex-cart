@@ -75,6 +75,43 @@ export class CategoryController {
     }
   }
 
+  public static async addCategoryAttribute(req: Request, res: Response) {
+    try {
+      const data: any = await _categoryService.addCategoryAttribute(req.body);
+      if (data.status) {
+        return res.status(StatusCodes.CREATED).json(data);
+      } else {
+        return res.status(StatusCodes.PRECONDITION_FAILED).json(data);
+      }
+    } catch (error) {
+      CategoryController.handleError(req, res, error);
+    }
+  }
+
+  public static async getCategoryAttribute(req: Request, res: Response) {
+    try {
+      const data: any = await _categoryService.getCategoryAttribute(req.query);
+      return res.status(StatusCodes.OK).json(data);
+    } catch (error) {
+      CategoryController.handleError(req, res, error);
+    }
+  }
+
+  public static async updateCategoryAttribute(req: Request, res: Response) {
+    try {
+      const data: any = await _categoryService.updateCategoryAttribute(
+        req.body
+      );
+      if (data.status) {
+        return res.status(StatusCodes.OK).json(data);
+      } else {
+        return res.status(StatusCodes.PRECONDITION_FAILED).json(data);
+      }
+    } catch (error) {
+      CategoryController.handleError(req, res, error);
+    }
+  }
+
   public static handleError(req: Request, res: Response, error: any) {
     console.error(error);
     return res

@@ -14,9 +14,7 @@ export class AuthController {
         return res.status(StatusCodes.PRECONDITION_FAILED).json(data);
       }
     } catch (error) {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ status: false, error: error });
+      AuthController.handleError(req, res, error);
     }
   }
 
@@ -29,9 +27,14 @@ export class AuthController {
         return res.status(StatusCodes.UNAUTHORIZED).json(data);
       }
     } catch (error) {
-      return res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ status: false, error: error });
+      AuthController.handleError(req, res, error);
     }
+  }
+
+  public static handleError(req: Request, res: Response, error: any) {
+    console.error(error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ status: false, error: "INTERNAL_SERVER_ERROR" });
   }
 }

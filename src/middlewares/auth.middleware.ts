@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes, getReasonPhrase } from "http-status-codes";
+import { User } from "../models";
 import { JwtHelperClass } from "../helpers/index";
 
 export class AuthMiddleware {
@@ -76,6 +77,21 @@ export class AuthMiddleware {
           .status(StatusCodes.FORBIDDEN)
           .json({ message: "Access denied" });
       }
+      next();
+    } catch (error) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+        status: false,
+        error: true,
+        message: error.message,
+      });
+    }
+  }
+
+  public static async findUser(req: any, res: Response, next: NextFunction) {
+    try {
+      let _id = req["user"]["_id"];
+      const data = await User.findOne({ _id: _id }).populate("role");
+      req["user"] = data;
       next();
     } catch (error) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({

@@ -3,10 +3,10 @@ import { StatusCodes } from "http-status-codes";
 import { check, validationResult } from "express-validator";
 
 export const validateSignUp = [
-  check("userName").notEmpty().withMessage("username required"),
+  check("userName").notEmpty().withMessage("useName required"),
   check("password").notEmpty().withMessage("password required"),
-  check("firstName").notEmpty().withMessage("First Name required"),
-  check("lastName").notEmpty().withMessage("Last Name required"),
+  check("firstName").notEmpty().withMessage("firstName required"),
+  check("lastName").notEmpty().withMessage("lastName required"),
   check("email")
     .notEmpty()
     .withMessage("Email required")
@@ -32,7 +32,7 @@ export const validateSignUp = [
 ];
 
 export const validateLogin = [
-  check("userName").notEmpty().withMessage("username required"),
+  check("userName").notEmpty().withMessage("userName required"),
   check("password").notEmpty().withMessage("password required"),
 
   (req: Request, res: Response, next: NextFunction) => {

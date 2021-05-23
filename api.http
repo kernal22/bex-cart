@@ -1,6 +1,6 @@
-#@base_url = http://localhost:2552/api
+@base_url = http://localhost:2552/api
 
-@base_url = http://65.0.21.177:2552/api
+#@base_url = http://65.0.21.177:2552/api
 
 ###
 
@@ -14,7 +14,7 @@ content-type: application/json
     "email": "admin@test.com",
     "phone": 9090911111,
     "password": "admin",
-    "role": "609a3fa0a716673990873c15"
+    "role": "60a0f1c141024c6a68b2a06b"
 }
 
 ###
@@ -66,5 +66,5 @@ POST {{base_url}}/user/role HTTP/1.1
 content-type: application/json
 
 {
-    "title": "admin"
+    "title": "reseller"
 }

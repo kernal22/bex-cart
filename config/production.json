@@ -4,6 +4,7 @@
         "app_url": ""
     },
     "db": {
+        "protocol": "mongodb+srv",
         "user": "root",
         "password": "4es4kTH0f3Kwli4o",
         "host": "bex-cart.wpipt.mongodb.net",

@@ -57,13 +57,13 @@ _router.post(
 );
 
 /******************************************************************************
- *                     category List - "GET /api/category"
+ *                     category List - "GET /api/category/list"
  ******************************************************************************/
 
 /**
- * @api {GET} /api/category<id> category and sub category List list
+ * @api {GET} /api/category/list<id> category and sub category List list
  * @apiName All-category-sub-category list
- * @apiGroup category
+ * @apiGroup Category
  *
  * @apiSuccess {boolean} error for checking the error.
  * @apiSuccess {String} message for information.
@@ -88,7 +88,7 @@ _router.post(
  *       "data":null
  *     }
  */
-_router.get("/:id?", CategoryController.getCategory);
+_router.get("/list/:id?", CategoryController.getCategory);
 
 /******************************************************************************
  *                     sub category List - "GET /api/category/sub-category/<parentId>"
@@ -97,7 +97,7 @@ _router.get("/:id?", CategoryController.getCategory);
 /**
  * @api {GET} /api/category/sub-category/<parentId> sub category List list
  * @apiName sub-category-list
- * @apiGroup category
+ * @apiGroup Category
  *
  * @apiSuccess {boolean} error for checking the error.
  * @apiSuccess {String} message for information.
@@ -210,6 +210,131 @@ _router.delete(
   AuthMiddleware.verifyToken,
   validateDelete,
   CategoryController.deleteCategory
+);
+
+/******************************************************************************
+ *                     Add category attributes - "POST /api/category/attribute"
+ ******************************************************************************/
+
+/**
+ * @api {POST} /api/category/attribute add category attributes
+ * @apiName add-category-attributes
+ * @apiGroup Category
+ * @apiHeader {String} Authorization Bearer token
+ *
+ * @apiSuccess {boolean} error for checking the error.
+ * @apiSuccess {String} message for information.
+ * @apiSuccess {object} data for payload.
+ *
+ * @apiExample Sample-Request:
+ *   {
+ *      "categoryId": "609ebccaf87a85672ccbd47a",
+ *      "name": "four Wheeler",
+ *      "values":[{"name": "maruti"}, {"name": "ford"}, {"name": "yamaha"}]
+ *    }
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "status": true,
+ *       "error": false,
+ *       "message": "Updated successfully ",
+ *       "data": object
+ *     }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 204 unauthorized request
+ *     {
+ *        "status": false
+ *       "error": true,
+ *       "data":null
+ *     }
+ */
+_router.post(
+  "/attribute",
+  AuthMiddleware.verifyToken,
+  CategoryController.addCategoryAttribute
+);
+
+/******************************************************************************
+ *                     sub attribute List - "GET /api/category/attribute?id=<categoryId>"
+ ******************************************************************************/
+
+/**
+ * @api {get} /api/category/attribute?id=<categoryId> category Attribute List
+ * @apiName category-attribute-list
+ * @apiGroup Category
+ *
+ * @apiSuccess {boolean} error for checking the error.
+ * @apiSuccess {String} message for information.
+ * @apiSuccess {object} data for payload.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "status": true,
+ *       "error": false,
+ *       "message": "sub category Lists ",
+ *       "data": object
+ *     }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 204 unauthorized request
+ *     {
+ *        "status": false
+ *       "error": true,
+ *       "message": "No data"
+ *       "data":null
+ *     }
+ */
+_router.get("/attribute", CategoryController.getCategoryAttribute);
+
+/******************************************************************************
+ *                     Update category attributes status - "PUT /api/category/attribute"
+ ******************************************************************************/
+
+/**
+ * @api {put} /api/category/attribute update category attributes status
+ * @apiName update-category-attributes-status
+ * @apiGroup Category
+ * @apiHeader {String} Authorization Bearer token
+ *
+ * @apiSuccess {boolean} error for checking the error.
+ * @apiSuccess {String} message for information.
+ * @apiSuccess {object} data for payload.
+ *
+ * @apiExample Sample-Request:
+ *   {
+ *      "status": true | false,
+ *      "_id": "60a8a6a40018c046b8c29d5e",
+ *      "valueId": 60a8a6a40018c046b8c29d60
+ *      "type": "attr" || "attr2"
+ *    }
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "status": true,
+ *       "error": false,
+ *       "message": "Updated successfully ",
+ *       "data": object
+ *     }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 204 unauthorized request
+ *     {
+ *        "status": false
+ *       "error": true,
+ *       "data":null
+ *     }
+ */
+_router.put(
+  "/attribute",
+  AuthMiddleware.verifyToken,
+  CategoryController.updateCategoryAttribute
 );
 
 export default _router;

@@ -7,8 +7,9 @@ export class DatabaseConnection {
     const MONGO_DB_PASS = get("db.password");
     const MONGO_DB_DATABASE = get("db.database");
     const MONGO_DB_HOST = get("db.host");
+    const MONGO_DB_PROTOCOL = get("db.protocol");
     // const URI = `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASS}@bex-cart.wpipt.mongodb.net/${MONGO_DB_DATABASE}`;
-    const URI = `mongodb://${MONGO_DB_USER}:${MONGO_DB_PASS}@${MONGO_DB_HOST}/${MONGO_DB_DATABASE}`;
+    const URI = `${MONGO_DB_PROTOCOL}://${MONGO_DB_USER}:${MONGO_DB_PASS}@${MONGO_DB_HOST}/${MONGO_DB_DATABASE}`;
 
     connect(URI, {
       useNewUrlParser: true,
