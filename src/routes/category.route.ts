@@ -253,7 +253,7 @@ _router.delete(
  */
 _router.post(
   "/attribute",
-  AuthMiddleware.verifyToken,
+  // AuthMiddleware.verifyToken,
   CategoryController.addCategoryAttribute
 );
 
@@ -290,6 +290,8 @@ _router.post(
  *     }
  */
 _router.get("/attribute", CategoryController.getCategoryAttribute);
+
+_router.get("/attribute/all", CategoryController.getAllCategoryAttribute);
 
 /******************************************************************************
  *                     Update category attributes status - "PUT /api/category/attribute"

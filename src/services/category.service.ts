@@ -238,6 +238,46 @@ export class CategoryService {
     });
   }
 
+  public async getAllCategoryAttribute(query: any) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { skip, length } = query;
+        const attributeLists: any = await Category.aggregate([
+          {
+            $project: {
+              _id: 0,
+              categoryName: "$name",
+              categoryId: "$_id",
+              attributes: {
+                $filter: {
+                  input: "$attributes",
+                  as: "attributes",
+                  cond: { $eq: ["$$attributes.status", true] },
+                },
+              },
+            },
+          },
+          { $unwind: "$attributes" },
+        ]);
+        if (attributeLists.length) {
+          return resolve({
+            status: true,
+            data: attributeLists,
+            message: "Attribute and its value list",
+          });
+        } else {
+          return resolve({
+            status: false,
+            message: "No Data found",
+            data: [],
+          });
+        }
+      } catch (error) {
+        return reject(error);
+      }
+    });
+  }
+
   public async updateCategoryAttribute(requestData: any) {
     return new Promise(async (resolve, reject) => {
       try {

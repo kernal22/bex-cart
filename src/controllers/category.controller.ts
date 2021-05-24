@@ -97,6 +97,17 @@ export class CategoryController {
     }
   }
 
+  public static async getAllCategoryAttribute(req: Request, res: Response) {
+    try {
+      const data: any = await _categoryService.getAllCategoryAttribute(
+        req.query
+      );
+      return res.status(StatusCodes.OK).json(data);
+    } catch (error) {
+      CategoryController.handleError(req, res, error);
+    }
+  }
+
   public static async updateCategoryAttribute(req: Request, res: Response) {
     try {
       const data: any = await _categoryService.updateCategoryAttribute(
