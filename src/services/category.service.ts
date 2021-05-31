@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import slugify from "slugify";
 import { ICategoryAttribute } from "../entities";
-import { Category } from "../models";
+import { Category, CategoryAttribute } from "../models";
 import { FileUtils } from "../utils";
 import mongoose from "mongoose";
 export class CategoryService {
@@ -163,32 +163,36 @@ export class CategoryService {
     });
   }
 
-  public async addCategoryAttribute(requestData: ICategoryAttribute) {
+  public async addCategoryAttribute(requestData: any) {
     return new Promise(async (resolve, reject) => {
       try {
-        const { categoryId, name, values } = requestData;
-        const slug = slugify(name.toLowerCase());
-        values.map((item) => (item["slug"] = slugify(item.name.toLowerCase())));
-        const attributeData = { name, slug, values };
-        const categoryData = await Category.findById(categoryId);
+        const resp = [];
+        const attributeExistArr = [];
 
-        for (let item of categoryData.attributes) {
-          if (item.slug == slug) {
-            return resolve({
-              status: false,
-              message: "Attribute already exist",
-            });
+        for (let item of requestData.attributes) {
+          const { categoryId, name, values } = item;
+          const slug = slugify(name.toLowerCase());
+          const isAttributeExist = await CategoryAttribute.findOne({
+            slug: slug,
+          });
+          if (isAttributeExist) {
+            attributeExistArr.push(`${name} attribute already exist`);
+          } else {
+            values.map(
+              (attr: any) => (attr["slug"] = slugify(attr.name.toLowerCase()))
+            );
+            const attributeData = { categoryId, name, slug, values };
+            const newAttributeData = new CategoryAttribute(attributeData);
+            const result = await newAttributeData.save();
+            resp.push(result);
           }
         }
-        const result = await Category.findByIdAndUpdate(
-          categoryId,
-          { $push: { attributes: attributeData } },
-          { new: true }
-        );
+
         return resolve({
           status: true,
           message: "Added successfully",
-          data: result,
+          data: resp,
+          warning: attributeExistArr,
         });
       } catch (error) {
         return reject(error);
@@ -241,24 +245,33 @@ export class CategoryService {
   public async getAllCategoryAttribute(query: any) {
     return new Promise(async (resolve, reject) => {
       try {
-        const { skip, length } = query;
-        const attributeLists: any = await Category.aggregate([
-          {
-            $project: {
-              _id: 0,
-              categoryName: "$name",
-              categoryId: "$_id",
-              attributes: {
-                $filter: {
-                  input: "$attributes",
-                  as: "attributes",
-                  cond: { $eq: ["$$attributes.status", true] },
-                },
-              },
-            },
-          },
-          { $unwind: "$attributes" },
-        ]);
+        const { skip, length, status } = query;
+        const attributeLists: any = await CategoryAttribute.find({
+          status: status || true,
+        }).select({
+          name: 1,
+          _id: 1,
+          categoryId: 1,
+          values: 1,
+          status: 1,
+        });
+        // const attributeLists: any = await Category.aggregate([
+        //   {
+        //     $project: {
+        //       _id: 0,
+        //       categoryName: "$name",
+        //       categoryId: "$_id",
+        //       attributes: {
+        //         $filter: {
+        //           input: "$attributes",
+        //           as: "attributes",
+        //           cond: { $eq: ["$$attributes.status", true] },
+        //         },
+        //       },
+        //     },
+        //   },
+        //   { $unwind: "$attributes" },
+        // ]);
         if (attributeLists.length) {
           return resolve({
             status: true,

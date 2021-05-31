@@ -74,3 +74,36 @@ content-type: application/json
 
 GET {{base_url}}/category/attribute/all HTTP/1.1
 content-type: application/json
+
+###
+POST  {{base_url}}/category/attribute HTTP/1.1
+Content-Type: application/json
+
+{
+  "attributes": [
+    {
+      "categoryId": "609ebccaf87a85672ccbd47a",
+      "name": "two Wheeler",
+      "values": [
+        {
+          "name": "suzuki"
+        }
+      ]
+    },
+    {
+      "categoryId": "609ebd48f25ade44bc8501ca",
+      "name": "green vege",
+      "values": [
+        {
+          "name": "potato"
+        },
+        {
+          "name": "tomato"
+        },
+        {
+          "name": "onion"
+        }
+      ]
+    }
+  ]
+}

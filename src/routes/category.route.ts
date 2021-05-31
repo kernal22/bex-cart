@@ -227,11 +227,40 @@ _router.delete(
  * @apiSuccess {object} data for payload.
  *
  * @apiExample Sample-Request:
- *   {
+ * {
+ *  "attributes": [
+ *    {
  *      "categoryId": "609ebccaf87a85672ccbd47a",
  *      "name": "four Wheeler",
- *      "values":[{"name": "maruti"}, {"name": "ford"}, {"name": "yamaha"}]
+ *      "values": [
+ *        {
+ *          "name": "maruti"
+ *        },
+ *        {
+ *          "name": "ford"
+ *        },
+ *        {
+ *          "name": "yamaha"
+ *        }
+ *      ]
+ *    },
+ *    {
+ *      "categoryId": "609ebd48f25ade44bc8501ca",
+ *      "name": "green vege",
+ *      "values": [
+ *        {
+ *          "name": "potato"
+ *        },
+ *        {
+ *          "name": "tomato"
+ *        },
+ *        {
+ *          "name": "onion"
+ *        }
+ *      ]
  *    }
+ *  ]
+ * }
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK

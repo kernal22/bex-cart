@@ -77,6 +77,7 @@ export class CategoryController {
 
   public static async addCategoryAttribute(req: Request, res: Response) {
     try {
+      console.log(req.body);
       const data: any = await _categoryService.addCategoryAttribute(req.body);
       if (data.status) {
         return res.status(StatusCodes.CREATED).json(data);
