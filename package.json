@@ -7,10 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
     "build": "rimraf ./build && tsc",
+    "buildnew": "tsc -p .",
     "build:doc": "apidoc -i src/ -o doc/",
     "start:doc": "npm run build:doc && node api-doc-server",
     "start:dev": "nodemon",
-    "start:prod": "npm run build && cross-env NODE_ENV=production node ./build/src/index.js"
+    "start:prod": "npm run build && cross-env NODE_ENV=production node ./build/src/index.js",
+    "prod": "cross-env NODE_ENV=production node ./build/src/index.js"
   },
   "keywords": [
     "e-commerce",

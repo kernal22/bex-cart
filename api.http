@@ -1,4 +1,4 @@
-@base_url = http://localhost:2552/api
+@base_url = http://localhost:5500/api
 
 #@base_url = http://65.0.21.177:2552/api
 

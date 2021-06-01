@@ -1,32 +1,17 @@
-#
-# Builder stage.
-# This state compile our TypeScript to get the JavaScript code
-#
-FROM node:10.19.0
+FROM node:10-alpine
 
-WORKDIR /app/src
+WORKDIR /usr/src/app
 
-COPY ["package.json", "package-lock.json", "tsconfig.json", "./"]
-
-RUN npm install
+COPY ["package*.json", "tsconfig.json", "./"]
 
 COPY . .
 
-CMD npm run start:build
+RUN npm install
 
-#
-# Production stage.
-# This state compile get back the JavaScript code from builder stage
-# It will also install the production package only
-#
-FROM node:10.19.0-alpine
+RUN npm run buildnew
 
-WORKDIR /app
-ENV NODE_ENV=production
+COPY ./build .
 
-COPY package*.json ./
-RUN npm ci --quiet --only=production
+EXPOSE 5500
 
-## We just need the build to execute the command
-## We just need the build to execute the command
-COPY --from=builder /build ./build
+CMD npm run prod
